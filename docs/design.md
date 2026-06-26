@@ -132,7 +132,7 @@ Validation is defined with Zod in `/shared`. The backend enforces request valida
    MySQL is required by the assessment. Prisma gives fast TypeScript-first schema iteration, migrations, seed data, and concise CRUD queries. For query-heavy reporting, Drizzle or Knex could be reconsidered.
 
 4. **Zod as shared contract source**
-   Zod keeps request validation and TypeScript types aligned across backend, admin, and mobile. NestJS class-validator is more conventional for Swagger reflection, so Swagger is kept lightweight and manually documented.
+   Zod keeps request validation and TypeScript types aligned across backend, admin, and mobile. The backend uses `nestjs-zod` DTOs so request and response schemas can feed NestJS validation and Swagger/OpenAPI metadata without duplicating DTO definitions.
 
 5. **Soft delete without product status**
    Delete sets `deletedAt` rather than removing rows. A fuller `DRAFT`/`ACTIVE`/`ARCHIVED` workflow was considered but omitted to keep the product slice lean.
@@ -143,9 +143,11 @@ AI was used to stress-test scope and architecture before implementation. Useful 
 
 - "Grill me on this whole plan one question at a time, and provide your recommended answer."
 - "Trade off DECIMAL versus integer minor units for representing price."
-- "Should this assessment use Nx, or a lighter workspace?"
+- "Why not use nestjs-zod, and what does it improve for OpenAPI integration?"
 
-One course correction: the first plan suggested a package status workflow. After review, that was rejected as unnecessary for the minimum slice; soft delete via `deletedAt` gives the needed behavior with less surface area.
+Course corrections that came from reviewing AI-generated or AI-assisted decisions:
+
+1. The first backend pass used shared Zod schemas for validation but duplicated request/response shapes in a manual `swagger.ts` file for OpenAPI. That worked, but it created drift risk: the Zod contract and Swagger contract could silently diverge. After review, the backend was refactored to use `nestjs-zod` DTOs (`createZodDto`) for both request and response schemas, and the duplicate Swagger helper was removed.
 
 I would avoid using AI blindly for final API contracts and tests. Those need human review because small contract choices affect all three surfaces.
 

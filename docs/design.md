@@ -16,9 +16,11 @@ Deliberately out of scope:
 
 Assumptions for this project:
 
-- **Users:** Authentication, authorization, and audit views are deferred.
+- **Users:** A trusted administrator manages the catalog, while mobile users browse the same visible packages. Authentication, authorization, and audit views are deferred.
 - **Scale:** The catalog and read traffic are small, so pagination and caching are intentionally omitted.
-- **Requirements:** Packages are displayed in USD. The admin form accepts USD decimal input and the API stores integer cents; booking and availability are not modeled.
+- **Requirements:**
+  - Packages are displayed in USD. The admin form accepts USD decimal input and the API stores integer cents.
+  - Booking and availability are not modeled.
 
 ## Architecture
 

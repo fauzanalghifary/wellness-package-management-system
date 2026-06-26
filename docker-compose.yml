@@ -1,0 +1,72 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: wellness
+      MYSQL_USER: wellness
+      MYSQL_PASSWORD: wellness
+      MYSQL_ROOT_PASSWORD: wellness_root
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'mysqladmin',
+          'ping',
+          '-h',
+          'localhost',
+          '-uwellness',
+          '-pwellness'
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: >
+      sh -c "pnpm --filter @wellness/shared build &&
+             pnpm --filter backend prisma:deploy &&
+             pnpm --filter backend prisma:seed &&
+             pnpm --filter backend dev"
+    environment:
+      DATABASE_URL: mysql://wellness:wellness@mysql:3306/wellness
+      PORT: 3001
+      CORS_ORIGINS: http://localhost:3000,http://localhost:8081
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/backend/node_modules
+      - /app/shared/node_modules
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  admin-portal:
+    build:
+      context: .
+      dockerfile: admin-portal/Dockerfile
+    command: >
+      sh -c "pnpm --filter @wellness/shared build &&
+             pnpm --filter admin-portal dev"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/admin-portal/node_modules
+      - /app/shared/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:

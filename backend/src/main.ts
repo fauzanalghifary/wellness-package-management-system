@@ -4,7 +4,9 @@ import { cleanupOpenApiDoc } from 'nestjs-zod';
 import { AppModule } from './app.module';
 
 function getCorsOrigins(): string[] {
-  return (process.env.CORS_ORIGINS ?? 'http://localhost:3000')
+  return (
+    process.env.CORS_ORIGINS ?? 'http://localhost:3000,http://localhost:8081'
+  )
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);

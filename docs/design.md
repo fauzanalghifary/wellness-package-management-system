@@ -192,19 +192,19 @@ Validation is defined with Zod in `/shared`. The backend enforces request valida
 ## Technical Decisions And Trade-Offs
 
 1. **React Native over Flutter**
-   The assessment overview specifies React Native with TypeScript, while the thin-prototype checklist refers to Flutter. I treated that as an inconsistency and chose React Native because the role and other surfaces are TypeScript-based, which allows shared contracts and reduces context switching.
+   - The assessment overview specifies React Native with TypeScript, while the thin-prototype checklist refers to Flutter. I treated that as an inconsistency and chose React Native because the role and other surfaces are TypeScript-based, which allows shared contracts and reduces context switching.
 
 2. **Lightweight pnpm workspace over Nx**
-   Nx would be useful for a larger monorepo with many apps, affected builds, and dependency graph enforcement. For this timeboxed prototype, pnpm workspaces keep setup simpler while preserving shared package boundaries.
+   - Nx would be useful for a larger monorepo with many apps, affected builds, and dependency graph enforcement. For this timeboxed prototype, pnpm workspaces keep setup simpler while preserving shared package boundaries.
 
 3. **Prisma with MySQL**
-   MySQL is required by the assessment. Prisma gives fast TypeScript-first schema iteration, migrations, seed data, and concise CRUD queries. For query-heavy reporting, Drizzle or Knex could be reconsidered.
+   - MySQL is required by the assessment. Prisma gives fast TypeScript-first schema iteration, migrations, seed data, and concise CRUD queries. For query-heavy reporting, Drizzle or Knex could be reconsidered.
 
 4. **Zod as shared contract source**
-   Zod keeps request validation and TypeScript types aligned across backend, admin, and mobile. The backend uses `nestjs-zod` DTOs so request and response schemas can feed NestJS validation and Swagger/OpenAPI metadata without duplicating DTO definitions.
+   - Zod keeps request validation and TypeScript types aligned across backend, admin, and mobile. The backend uses `nestjs-zod` DTOs so request and response schemas can feed NestJS validation and Swagger/OpenAPI metadata without duplicating DTO definitions.
 
 5. **Soft delete without product status**
-   Delete sets `deletedAt` rather than removing rows. A fuller `DRAFT`/`ACTIVE`/`ARCHIVED` workflow was considered but omitted to keep the product slice lean.
+   - Delete sets `deletedAt` rather than removing rows. A fuller `DRAFT`/`ACTIVE`/`ARCHIVED` workflow was considered but omitted to keep the product slice lean.
 
 ## Production Follow-Ups
 

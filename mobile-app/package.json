@@ -1,0 +1,31 @@
+{
+  "name": "mobile-app",
+  "version": "0.1.0",
+  "private": true,
+  "main": "App.tsx",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "echo \"No mobile app tests configured\"",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "prettier:fix": "prettier --write App.tsx src package.json tsconfig.json metro.config.js app.json"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~6.1.2",
+    "@wellness/shared": "workspace:*",
+    "expo": "~54.0.35",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-web": "^0.21.2",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "typescript": "^5.7.2"
+  }
+}

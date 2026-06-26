@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { cleanupOpenApiDoc } from 'nestjs-zod';
 import { AppModule } from './app.module';
 
 function getCorsOrigins(): string[] {
@@ -20,7 +21,7 @@ async function bootstrap(): Promise<void> {
     .setDescription('Admin and mobile APIs for wellness package management.')
     .setVersion('0.1.0')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = cleanupOpenApiDoc(SwaggerModule.createDocument(app, config));
   SwaggerModule.setup('api/docs', app, document);
 
   const port = Number(process.env.PORT ?? 3001);

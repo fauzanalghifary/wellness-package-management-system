@@ -1,1 +1,12 @@
-.idea/
+node_modules
+.pnpm-store
+dist
+.next
+.expo
+.idea
+coverage
+.env
+.env.local
+.DS_Store
+*.log
+*.tsbuildinfo

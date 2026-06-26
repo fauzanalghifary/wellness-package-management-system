@@ -1,0 +1,5 @@
+packages:
+  - 'backend'
+  - 'admin-portal'
+  - 'mobile-app'
+  - 'shared'

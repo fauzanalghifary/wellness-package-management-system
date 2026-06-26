@@ -6,11 +6,11 @@ import {
   ActivityIndicator,
   FlatList,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   View
 } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { fetchMobilePackages } from './src/lib/api/packages';
 import { formatPrice } from './src/lib/format';
 
@@ -42,47 +42,49 @@ export default function App(): JSX.Element {
   }, [loadPackages]);
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <StatusBar style="dark" />
-      <View style={styles.header}>
-        <Text style={styles.kicker}>Wellness</Text>
-        <Text style={styles.title}>Available packages</Text>
-        <Text style={styles.subtitle}>
-          Browse treatments and sessions from the catalog.
-        </Text>
-      </View>
-
-      {loadState.status === 'loading' ? (
-        <View style={styles.centerState}>
-          <ActivityIndicator color="#4f675b" />
-          <Text style={styles.stateText}>Loading packages...</Text>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.screen}>
+        <StatusBar style="dark" />
+        <View style={styles.header}>
+          <Text style={styles.kicker}>Wellness</Text>
+          <Text style={styles.title}>Available packages</Text>
+          <Text style={styles.subtitle}>
+            Browse treatments and sessions from the catalog.
+          </Text>
         </View>
-      ) : null}
 
-      {loadState.status === 'error' ? (
-        <View style={styles.centerState}>
-          <Text style={styles.errorText}>{loadState.message}</Text>
-          <Pressable style={styles.retryButton} onPress={loadPackages}>
-            <Text style={styles.retryText}>Retry</Text>
-          </Pressable>
-        </View>
-      ) : null}
+        {loadState.status === 'loading' ? (
+          <View style={styles.centerState}>
+            <ActivityIndicator color="#4f675b" />
+            <Text style={styles.stateText}>Loading packages...</Text>
+          </View>
+        ) : null}
 
-      {loadState.status === 'loaded' && loadState.packages.length === 0 ? (
-        <View style={styles.centerState}>
-          <Text style={styles.stateText}>No packages are available yet.</Text>
-        </View>
-      ) : null}
+        {loadState.status === 'error' ? (
+          <View style={styles.centerState}>
+            <Text style={styles.errorText}>{loadState.message}</Text>
+            <Pressable style={styles.retryButton} onPress={loadPackages}>
+              <Text style={styles.retryText}>Retry</Text>
+            </Pressable>
+          </View>
+        ) : null}
 
-      {loadState.status === 'loaded' && loadState.packages.length > 0 ? (
-        <FlatList
-          contentContainerStyle={styles.list}
-          data={loadState.packages}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <PackageCard wellnessPackage={item} />}
-        />
-      ) : null}
-    </SafeAreaView>
+        {loadState.status === 'loaded' && loadState.packages.length === 0 ? (
+          <View style={styles.centerState}>
+            <Text style={styles.stateText}>No packages are available yet.</Text>
+          </View>
+        ) : null}
+
+        {loadState.status === 'loaded' && loadState.packages.length > 0 ? (
+          <FlatList
+            contentContainerStyle={styles.list}
+            data={loadState.packages}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <PackageCard wellnessPackage={item} />}
+          />
+        ) : null}
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

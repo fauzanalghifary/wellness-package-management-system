@@ -67,3 +67,17 @@ pnpm prettier:fix
 ## Design Notes
 
 See [docs/design.md](docs/design.md) for scope, architecture, API contracts, trade-offs, and AI workflow notes.
+
+## Screenshots
+
+### Admin Portal
+
+![Admin package catalog](docs/screenshots/admin-catalog.png)
+
+### Mobile App
+
+![Mobile package catalog](docs/screenshots/mobile-catalog.jpeg)
+
+### API Response
+
+![Packages API response](docs/screenshots/packages-api.png)

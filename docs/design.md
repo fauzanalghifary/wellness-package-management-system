@@ -232,9 +232,8 @@ Useful prompt sequences included:
   - This led to a reviewable change from manually duplicated Swagger shapes to Zod-derived Nest DTOs.
 
 Course corrections that came from reviewing AI-generated or AI-assisted decisions:
-
-1. The first backend pass used shared Zod schemas for validation but duplicated request/response shapes in a manual `swagger.ts` file for OpenAPI. That worked, but it created drift risk: the Zod contract and Swagger contract could silently diverge. After review, the backend was refactored to use `nestjs-zod` DTOs (`createZodDto`) for both request and response schemas, and the duplicate Swagger helper was removed.
-2. The first admin implementation concentrated page state, data fetching, mutations, table rendering, form validation, and modal UI in one `page.tsx`. It worked, but review showed that ordinary changes would be unnecessarily risky. I split it into a page-level orchestrator, `PackageTable`, `PackageFormModal`, and a form-model module that owns validation and price conversion. React Query state remains at the page boundary, while presentation and form concerns now have clear ownership.
+- The first backend pass used shared Zod schemas for validation but duplicated request/response shapes in a manual `swagger.ts` file for OpenAPI. That worked, but it created drift risk: the Zod contract and Swagger contract could silently diverge. After review, the backend was refactored to use `nestjs-zod` DTOs (`createZodDto`) for both request and response schemas, and the duplicate Swagger helper was removed. 
+- The first admin implementation concentrated page state, data fetching, mutations, table rendering, form validation, and modal UI in one `page.tsx`. It worked, but review showed that ordinary changes would be unnecessarily risky. I split it into a page-level orchestrator, `PackageTable`, `PackageFormModal`, and a form-model module that owns validation and price conversion. React Query state remains at the page boundary, while presentation and form concerns now have clear ownership.
 
 Where I chose NOT to use AI:
 - I did not use AI as the authority for deciding that a feature was complete. I manually verified the admin CRUD flow, the mobile app’s connection to the real API, browser CORS behavior, and clean CI execution. 

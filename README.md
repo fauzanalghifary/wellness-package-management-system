@@ -2,6 +2,11 @@
 
 A focused full-stack prototype for managing wellness packages across a NestJS API, Next.js admin portal, and Expo React Native mobile app.
 
+## Prerequisites
+
+- Node.js 22 
+- Docker Desktop for MySQL, the backend API, and the admin portal
+
 ## Structure
 
 ```text
@@ -27,14 +32,15 @@ Ports:
 - Swagger docs: http://localhost:3001/api/docs
 - MySQL: localhost:3306
 
-The Expo mobile app runs locally because simulator/device networking is environment-specific:
+The Expo mobile app runs locally because simulator/device networking is environment-specific. Create its local configuration from the tracked example, then replace the example LAN address with the host machine's address when using a physical device:
 
 ```bash
+cp mobile-app/.env.example mobile-app/.env
 pnpm install
 pnpm --filter mobile-app start
 ```
 
-Set the mobile API URL with your machine LAN IP when testing on a physical device:
+`mobile-app/.env` should contain:
 
 ```bash
 EXPO_PUBLIC_API_URL=http://192.168.1.10:3001
@@ -44,6 +50,8 @@ EXPO_PUBLIC_API_URL=http://192.168.1.10:3001
 
 ```bash
 pnpm install
+cp backend/.env.example backend/.env
+cp mobile-app/.env.example mobile-app/.env
 docker compose up -d mysql
 pnpm --filter @wellness/shared build
 pnpm --filter backend prisma:deploy
@@ -56,12 +64,13 @@ pnpm --filter mobile-app start
 ## Verification
 
 ```bash
+pnpm --filter @wellness/shared build
+pnpm --filter backend prisma:generate
+pnpm exec prettier --check .
+pnpm lint
+pnpm typecheck
 pnpm --filter backend test
-pnpm --filter admin-portal lint
-pnpm --filter admin-portal typecheck
-pnpm --filter mobile-app lint
-pnpm --filter mobile-app typecheck
-pnpm prettier:fix
+pnpm -r build
 ```
 
 ## Design Notes

@@ -38,7 +38,7 @@ flowchart LR
    end
 
    subgraph Shared
-      Zod["Shared Zod Contracts"]
+      Zod["Shared Zod API Contracts"]
    end
 
    subgraph Database

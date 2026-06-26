@@ -60,16 +60,38 @@ flowchart LR
 Repository layout:
 
 ```text
-/backend       NestJS API, Prisma, Swagger, service tests
-/admin-portal  Next.js CRUD screen
-/mobile-app    Expo React Native browse screen
-/shared        Zod request/response schemas and inferred TypeScript types
-/docs          Design notes and AI workflow
+.
+├── backend/
+│   ├── prisma/                 schema, migrations, and seed data
+│   ├── src/
+│   │   ├── common/             cross-cutting Nest validation
+│   │   ├── packages/           controllers, service, repository, DTOs, mapping
+│   │   ├── prisma/             Prisma client lifecycle
+│   │   ├── app.module.ts       composition root
+│   │   ├── health.controller.ts
+│   │   └── main.ts             HTTP, CORS, and Swagger bootstrap
+│   └── test/                   focused unit tests
+├── admin-portal/
+│   └── src/
+│       ├── app/                Next.js route shell and providers
+│       ├── features/packages/  package table, modal, and form model
+│       └── lib/                API client and presentation formatting
+├── mobile-app/
+│   ├── App.tsx                 Expo entry point and catalog screen
+│   └── src/lib/                mobile API client and formatting
+├── shared/src/                 Zod API contracts and inferred types
+├── docs/                       design notes and submission screenshots
+├── .github/workflows/          continuous integration
+└── docker-compose.yml          local service orchestration
 ```
 
-The backend uses one package domain module with separate controllers for admin and mobile. The controllers keep consumer-specific API boundaries explicit, while the service and repository avoid duplicating domain logic.
+The backend uses a vertical `packages` domain module with separate controllers for admin and mobile. Controllers own consumer-specific HTTP boundaries; the service owns use-case logic; the repository owns persistence; and mapping stays separate from Prisma records.
 
-Shared concerns are explicit: `/shared` owns Zod contracts and inferred types, the backend turns validation failures into a consistent error payload, and each surface has an `.env.example` for its API or database configuration. Client API helpers parse responses with the shared schemas before using them.
+The admin portal follows `app` for routing and composition, `features` for package UI, and `lib` for shared client utilities. 
+
+The mobile app is intentionally smaller: its single screen remains at the Expo entry point while its API and formatting logic live under `src/lib`.
+
+Shared concerns are explicit: `/shared` owns Zod API contracts and inferred types, the backend turns validation failures into a consistent error payload, and each surface has an `.env.example` for its API or database configuration.
 
 ## Data Model
 

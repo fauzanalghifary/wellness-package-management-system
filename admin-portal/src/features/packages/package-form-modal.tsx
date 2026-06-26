@@ -53,14 +53,23 @@ export function PackageFormModal({
 
         <div className="grid gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-sm font-medium text-moss">Price</span>
-            <input
-              className="mt-1 h-11 w-full rounded-md border border-ink/20 bg-white px-3 outline-none transition focus:border-moss"
-              min="0"
-              step="0.01"
-              type="number"
-              {...form.register('price')}
-            />
+            <span className="text-sm font-medium text-moss">Price (USD)</span>
+            <div className="relative mt-1">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-3 text-ink/60"
+              >
+                $
+              </span>
+              <input
+                aria-label="Price in US dollars"
+                className="h-11 w-full rounded-md border border-ink/20 bg-white pl-7 pr-3 outline-none transition focus:border-moss"
+                min="0"
+                step="0.01"
+                type="number"
+                {...form.register('price')}
+              />
+            </div>
             <FieldError message={form.formState.errors.price?.message} />
           </label>
 

@@ -21,16 +21,35 @@ The goal is evaluator confidence rather than feature breadth: a narrow path shou
 
 ```mermaid
 flowchart LR
-  Admin["Next.js Admin Portal"] --> AdminApi["NestJS /admin/packages"]
-  Mobile["Expo React Native App"] --> MobileApi["NestJS /mobile/packages"]
-  AdminApi --> Service["Packages Service"]
-  MobileApi --> Service
-  Service --> Repo["Packages Repository"]
-  Repo --> MySQL[("MySQL")]
-  Shared["Shared Zod Contracts"] --> Admin
-  Shared --> Mobile
-  Shared --> AdminApi
-  Shared --> MobileApi
+   subgraph Frontend
+      Admin["Next.js Admin"]
+      Mobile["Expo App"]
+   end
+
+   subgraph Backend
+      API["NestJS API"]
+      Service["Packages Service"]
+      Repo["Packages Repository"]
+   end
+
+   subgraph Shared
+      Zod["Shared Zod Contracts"]
+   end
+
+   subgraph Database
+      MySQL[("MySQL")]
+   end
+
+   Admin --> API
+   Mobile --> API
+
+   API --> Service
+   Service --> Repo
+   Repo --> MySQL
+
+   Admin -.-> Zod
+   Mobile -.-> Zod
+   API -.-> Zod
 ```
 
 Repository layout:

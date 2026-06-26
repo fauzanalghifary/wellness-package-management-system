@@ -4,7 +4,7 @@ A focused full-stack prototype for managing wellness packages across a NestJS AP
 
 ## Prerequisites
 
-- Node.js 22 
+- Node.js 22
 - Docker Desktop for MySQL, the backend API, and the admin portal
 
 ## Structure

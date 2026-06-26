@@ -139,13 +139,13 @@ Create request:
 }
 ```
 
-Validation rules: 
-- `name` is trimmed and 1-120 characters, 
-- `description` is trimmed and 1-1000 characters,
-- `priceCents` is a non-negative integer, and 
-- `durationMinutes` is an integer from 1 to 1,440. 
-- Patch accepts any non-empty subset of those fields. 
+Validation rules:
 
+- `name` is trimmed and 1-120 characters,
+- `description` is trimmed and 1-1000 characters,
+- `priceCents` is a non-negative integer, and
+- `durationMinutes` is an integer from 1 to 1,440.
+- Patch accepts any non-empty subset of those fields.
 
 Validation failures use the `400` response shape below:
 
@@ -195,6 +195,7 @@ Validation is defined with Zod in `/shared`. The backend enforces request valida
 ## AI Workflow Notes
 
 I used both Codex and Claude Code as a collaborative engineering tool to:
+
 - interrogate the initial plan,
 - scaffold implementation work,
 - diagnose runtime and CI failures, and

@@ -109,9 +109,9 @@ WellnessPackage
 - updatedAt datetime
 ```
 
-`deletedAt` implements soft delete and is not exposed in API responses. Package names are not unique because uniqueness depends on future catalog rules such as location, SKU, category, or versioning.
-
-Money is stored as integer minor units (`priceCents`) to avoid JavaScript floating-point precision issues. The prototype assumes a single currency. In a multi-market production system, this would become `priceMinorUnits` plus an ISO-4217 `currencyCode`.
+- `deletedAt` implements soft delete and is not exposed in API responses. 
+- Package names are not unique because uniqueness depends on future catalog rules such as location, SKU, category, or versioning.
+- Money is stored as integer minor units (`priceCents`) to avoid JavaScript floating-point precision issues. The prototype assumes a single currency. In a multi-market production system, this would become `priceMinorUnits` plus an ISO-4217 `currencyCode`.
 
 ## API Contract
 

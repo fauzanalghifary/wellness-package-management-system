@@ -9,7 +9,7 @@
     "test": "echo \"No admin portal tests configured\"",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "prettier:fix": "prettier --write app src package.json tsconfig.json next.config.mjs postcss.config.js tailwind.config.ts"
+    "prettier:fix": "prettier --write src package.json tsconfig.json next.config.mjs postcss.config.js tailwind.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
